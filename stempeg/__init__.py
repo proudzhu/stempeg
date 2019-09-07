@@ -12,6 +12,7 @@ import soundfile as sf
 import argparse
 import pkg_resources
 import shutil
+import platform
 
 __version__ = "0.1.8"
 
@@ -27,7 +28,12 @@ def cmd_exist(cmd):
         )
 
 def ffmpeg_and_ffprobe_exists():
-    return cmd_exist("ffmpeg") and cmd_exist("ffprobe")
+    ffmpeg = "ffmpeg"
+    ffprobe = "ffprobe"
+    if platform.system() == "Windows":
+        ffmpeg += ".exe"
+        ffprobe += ".exe"
+    return cmd_exist(ffmpeg) and cmd_exist(ffprobe)
 
 
 if not ffmpeg_and_ffprobe_exists():
